@@ -371,7 +371,7 @@ void main()
 #if DEBUG == DEBUG_GGXLUT
 {
     vec2 brdfSamplePoint = clamp(vec2(NdotV, materialInfo.perceptualRoughness), vec2(0.0, 0.0), vec2(1.0, 1.0));
-    vec2 f_ab = texture(u_GGXLUT, brdfSamplePoint).rg;
+    vec2 f_ab = getGGX(brdfSamplePoint);
     g_finalColor.rgb = linearTosRGB(vec3(f_ab,0));
 }
 #endif
