@@ -59,11 +59,13 @@ void main()
     materialInfo.f0 = vec3(0.04);
     materialInfo.specularWeight = 1.0;
 
+
     // If the MR debug output is selected, we have to enforce evaluation of the non-iridescence BRDF functions.
 #if DEBUG == DEBUG_METALLIC_ROUGHNESS
 #undef MATERIAL_IRIDESCENCE
 #endif
 
+// NOTE: Updates f0
 #ifdef MATERIAL_IOR
     materialInfo = getIorInfo(materialInfo);
 #endif
