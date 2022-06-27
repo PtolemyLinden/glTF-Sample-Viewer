@@ -395,8 +395,11 @@ void main()
 #if DEBUG == DEBUG_METALLIC
     g_finalColor.rgb = linearTosRGB(vec3(materialInfo.metallic));
 #endif
-#if DEBUG == DEBUG_ROUGHNESS
+#if DEBUG == DEBUG_ROUGHNESS_PERCEPTUAL
     g_finalColor.rgb = linearTosRGB(vec3(materialInfo.perceptualRoughness));
+#endif
+#if DEBUG == DEBUG_ROUGHNESS_ALPHA
+    g_finalColor.rgb = linearTosRGB(vec3(materialInfo.alphaRoughness));
 #endif
 #if DEBUG == DEBUG_BASE_COLOR
     g_finalColor.rgb = linearTosRGB(materialInfo.baseColor);

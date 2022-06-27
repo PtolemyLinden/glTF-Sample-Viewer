@@ -696,10 +696,11 @@ class gltfRenderer
             {debugOutput: GltfState.DebugOutput.misc.DOT_TV            , shaderDefine: "DEBUG_DOT_TV"            },
             {debugOutput: GltfState.DebugOutput.misc.DOT_BV            , shaderDefine: "DEBUG_DOT_BV"            },
 
-            {debugOutput: GltfState.DebugOutput.mr.METALLIC_ROUGHNESS, shaderDefine: "DEBUG_METALLIC_ROUGHNESS"},
-            {debugOutput: GltfState.DebugOutput.mr.BASECOLOR, shaderDefine: "DEBUG_BASE_COLOR"},
-            {debugOutput: GltfState.DebugOutput.mr.ROUGHNESS, shaderDefine: "DEBUG_ROUGHNESS"},
-            {debugOutput: GltfState.DebugOutput.mr.METALLIC, shaderDefine: "DEBUG_METALLIC"},
+            {debugOutput: GltfState.DebugOutput.mr.METALLIC_ROUGHNESS  , shaderDefine: "DEBUG_METALLIC_ROUGHNESS"  },
+            {debugOutput: GltfState.DebugOutput.mr.BASECOLOR           , shaderDefine: "DEBUG_BASE_COLOR"          },
+            {debugOutput: GltfState.DebugOutput.mr.ROUGHNESS_PERCEPTUAL, shaderDefine: "DEBUG_ROUGHNESS_PERCEPTUAL"},
+            {debugOutput: GltfState.DebugOutput.mr.ROUGHNESS_ALPHA     , shaderDefine: "DEBUG_ROUGHNESS_ALPHA"     },
+            {debugOutput: GltfState.DebugOutput.mr.METALLIC            , shaderDefine: "DEBUG_METALLIC"            },
             
             {debugOutput: GltfState.DebugOutput.clearcoat.CLEARCOAT, shaderDefine: "DEBUG_CLEARCOAT"},
             {debugOutput: GltfState.DebugOutput.clearcoat.CLEARCOAT_FACTOR, shaderDefine: "DEBUG_CLEARCOAT_FACTOR"},

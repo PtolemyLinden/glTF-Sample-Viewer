@@ -164,7 +164,8 @@ GltfState.DebugOutput = {
         /** output the metallic value from pbr metallic roughness */
         METALLIC: "Metallic",
         /** output the roughness value from pbr metallic roughness */
-        ROUGHNESS: "Roughness",
+        ROUGHNESS_PERCEPTUAL: "Roughness (Perceptual)",
+        ROUGHNESS_ALPHA     : "Roughness (Alpha)",
     },
 
     /** output clearcoat lighting */
