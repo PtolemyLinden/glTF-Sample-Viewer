@@ -345,6 +345,21 @@ void main()
 #endif
 
     // Misc:
+#if DEBUG == DEBUG_BRDF_SCALE_BIAS
+    g_finalColor.rgb = linearTosRGB(vec3(f_ab,0.0));
+#endif
+#if DEBUG == DEBUG_BRDF_UV
+    g_finalColor.rgb = linearTosRGB(vec3(brdfSamplePoint, 0.0 ));
+#endif
+#if DEBUG == DEBUG_CAMERA_POSITION_RAW
+    g_finalColor.rgb = linearTosRGB(u_Camera);
+#endif
+#if DEBUG == DEBUG_CAMERA_POSITION_NORM
+    g_finalColor.rgb = linearTosRGB(normalize(u_Camera)*0.5 + vec3(0.5));
+#endif
+#if DEBUG == DEBUG_DIFFUSE_FINAL
+    g_finalColor.rgb = linearTosRGB(f_diffuse);
+#endif
 #if DEBUG == DEBUG_DIFFUSE_IRRADIANCE
 {
     vec3 irradiance = getDiffuseLight(n);
@@ -354,8 +369,41 @@ void main()
 #if DEBUG == DEBUG_DIFFUSE_RADIANCE
     g_finalColor.rgb = linearTosRGB(diffuse_radiance);
 #endif
-#if DEBUG == DEBUG_DIFFUSE_FINAL
-    g_finalColor.rgb = linearTosRGB(f_diffuse);
+#if DEBUG == DEBUG_DIFFUSE_REFLECTANCE
+    g_finalColor.rgb = linearTosRGB(vec3(reflectance)); // NOTE: reflectance is unused!
+#endif
+#if DEBUG == DEBUG_DOT_BV
+    g_finalColor.rgb = linearTosRGB(vec3(BdotV));
+#endif
+#if DEBUG == DEBUG_DOT_NV
+    g_finalColor.rgb = linearTosRGB(vec3(NdotV));
+#endif
+#if DEBUG == DEBUG_DOT_TV
+    g_finalColor.rgb = linearTosRGB(vec3(TdotV));
+#endif
+#if DEBUG == DEBUG_FRESNEL_ROUGH
+    g_finalColor.rgb = linearTosRGB(vec3(Fr));
+#endif
+#if DEBUG == DEBUG_GGXLUT
+{
+    vec2 brdfSamplePoint = clamp(vec2(NdotV, materialInfo.perceptualRoughness), vec2(0.0, 0.0), vec2(1.0, 1.0));
+    vec2 f_ab = getGGX(brdfSamplePoint);
+    g_finalColor.rgb = linearTosRGB(vec3(f_ab,0));
+}
+#endif
+#if DEBUG == DEBUG_IOR
+{
+    float ior       = materialInfo.ior;
+    vec3  debug_ior = vec3(0.0);
+         if (ior <= 1.0) debug_ior = vec3( ior );           // ior < 1.0 grayscale
+    else if (ior >  2.0) debug_ior = vec3(ior-2.0,0.0,0.0); // ior > 2.0 red
+    else if (ior >= 1.5) debug_ior = vec3(0.0,ior-1.0,0.0); // ior > 1.5 green // Intentional +0.5 offset
+    else                 debug_ior = vec3(0.0,0.0,ior-0.5); // ior > 1.0 blue  // Intentional +0.5 offset
+    g_finalColor.rgb = linearTosRGB(debug_ior);
+}
+#endif
+#if DEBUG == DEBUG_SPEC_RADIANCE
+    g_finalColor.rgb = linearTosRGB(spec_radiance);
 #endif
 #if DEBUG == DEBUG_SPEC_REFLECTION
 // getSpecularSample() // return reflection probe
@@ -367,24 +415,11 @@ void main()
     g_finalColor.rgb = linearTosRGB(specularSample.rgb);
 }
 #endif
-#if DEBUG == DEBUG_SPEC_RADIANCE
-    g_finalColor.rgb = linearTosRGB(spec_radiance);
+#if DEBUG == DEBUG_VERTEX_POSITION
+    g_finalColor.rgb = linearTosRGB(v_Position);
 #endif
-#if DEBUG == DEBUG_GGXLUT
-{
-    vec2 brdfSamplePoint = clamp(vec2(NdotV, materialInfo.perceptualRoughness), vec2(0.0, 0.0), vec2(1.0, 1.0));
-    vec2 f_ab = getGGX(brdfSamplePoint);
-    g_finalColor.rgb = linearTosRGB(vec3(f_ab,0));
-}
-#endif
-#if DEBUG == DEBUG_DOT_NV
-    g_finalColor.rgb = linearTosRGB(vec3(NdotV));
-#endif
-#if DEBUG == DEBUG_DOT_TV
-    g_finalColor.rgb = linearTosRGB(vec3(TdotV));
-#endif
-#if DEBUG == DEBUG_DOT_BV
-    g_finalColor.rgb = linearTosRGB(vec3(BdotV));
+#if DEBUG == DEBUG_VERT_TO_CAM
+    g_finalColor.rgb = linearTosRGB(v);
 #endif
 
     // MR:

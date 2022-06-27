@@ -144,15 +144,24 @@ GltfState.DebugOutput = {
 
     /** miscellaneous calculations */
     misc: {
-        DIFFUSE_IRRADIANCE: "Diffuse (Light)",
-        DIFFUSE_RADIANCE  : "Diffuse (Radiance)",
-        DIFFUSE_FINAL     : "Diffuse (Final)",
-        SPEC_REFLECTION   : "Spec (Reflection)",
-        SPEC_RADIANCE     : "Spec (Radiance)",
-        GGXLUT            : "GGX (Scale Bias) LUT",
-        DOT_NV            : "dot(Normal,ViewDir)",
-        DOT_TV            : "dot(Tangent,ViewDir)",
-        DOT_BV            : "dot(Bitangent,ViewDir)",
+        BRDF_SCALE_BIAS     : "BRDF Scale Bias",
+        BRDF_UV             : "BRDF uv",
+        CAMERA_POSITION_NORM: "Camera position (norm)",
+        CAMERA_POSITION_RAW : "Camera position (raw)",
+        DIFFUSE_FINAL       : "Diffuse (Final)",
+        DIFFUSE_IRRADIANCE  : "Diffuse (Light)",
+        DIFFUSE_RADIANCE    : "Diffuse (Radiance)",
+        DIFFUSE_REFLECTENCE : "Diffuse (Reflectance)",
+        DOT_BV              : "dot(Bitangent,V2C)",
+        DOT_NV              : "dot(Normal,V2C)",
+        DOT_TV              : "dot(Tangent,V2C)",
+        FRESNEL_ROUGH       : "Fresnel (Rough)",
+        GGXLUT              : "GGX (Scale Bias) LUT",
+        IOR                 : "Index of Refraction",
+        SPEC_RADIANCE       : "Spec (Radiance)",
+        SPEC_REFLECTION     : "Spec (Reflection)",
+        VERTEX_POSITION     : "Vertex position",
+        VERT_TO_CAM         : "Vertex to Camera",
     },
 
     /** output metallic roughness */
