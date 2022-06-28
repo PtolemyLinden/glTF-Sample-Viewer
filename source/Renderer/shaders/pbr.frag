@@ -172,7 +172,7 @@ void main()
     vec3 k_D = materialInfo.c_diff * (1.0 - FssEss + FmsEms); // we use +FmsEms as indicated by the formula in the blog post (might be a typo in the implementation)
     f_diffuse += (FmsEms + k_D) * irradiance;
 #endif // inline getIBLRadianceLambertian() for debugging
-#endif
+#endif // MATERIAL_IRIDESCENCE
 
 #ifdef MATERIAL_CLEARCOAT
     f_clearcoat += getIBLRadianceGGX(materialInfo.clearcoatNormal, v, materialInfo.clearcoatRoughness, materialInfo.clearcoatF0, 1.0);
@@ -181,7 +181,7 @@ void main()
 #ifdef MATERIAL_SHEEN
     f_sheen += getIBLRadianceCharlie(n, v, materialInfo.sheenRoughnessFactor, materialInfo.sheenColorFactor);
 #endif
-#endif
+#endif // USE_IBL
 
 #if DEBUG == DEBUG_SPEC_RADIANCE
     vec3 spec_radiance = f_specular;
