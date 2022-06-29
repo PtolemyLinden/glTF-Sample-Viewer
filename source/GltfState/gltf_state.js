@@ -150,7 +150,7 @@ GltfState.DebugOutput = {
         CAMERA_POSITION_NORM: "Camera position (norm)",
         CAMERA_POSITION_RAW : "Camera position (raw)",
         DIFFUSE_FINAL       : "Diffuse (Final)",
-        DIFFUSE_IRRADIANCE  : "Diffuse (Light)",
+        DIFFUSE_IRRADIANCE  : "Diffuse (Irradiance)",
         DIFFUSE_K           : "Diffuse (k_D)",
         DIFFUSE_RADIANCE    : "Diffuse (Radiance)",
         DIFFUSE_REFLECT0    : "Diffuse (reflect 0°)",
