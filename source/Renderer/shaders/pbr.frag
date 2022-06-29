@@ -432,6 +432,9 @@ void main()
 #if DEBUG == DEBUG_FRESNEL_ROUGH
     g_finalColor.rgb = linearTosRGB(vec3(Fr));
 #endif
+#if DEBUG == DEBUG_FRESNEL_SPEC
+    g_finalColor.rgb = linearTosRGB(k_S);
+#endif
 #if DEBUG == DEBUG_FSS_ESS_GGX
     g_finalColor.rgb = linearTosRGB(FssEssGGX);
 #endif
