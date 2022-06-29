@@ -496,7 +496,7 @@ void main()
 #if DEBUG == DEBUG_BASE_COLOR
     g_finalColor.rgb = linearTosRGB(materialInfo.baseColor);
 #endif
-#endif
+#endif // MATERIAL_METALLICROUGHNESS
 
     // Clearcoat:
 #ifdef MATERIAL_CLEARCOAT
@@ -512,7 +512,7 @@ void main()
 #if DEBUG == DEBUG_CLEARCOAT_NORMAL
     g_finalColor.rgb = (materialInfo.clearcoatNormal + vec3(1)) / 2.0;
 #endif
-#endif
+#endif // MATERIAL_CLEARCOAT
 
     // Sheen:
 #ifdef MATERIAL_SHEEN
@@ -525,7 +525,7 @@ void main()
 #if DEBUG == DEBUG_SHEEN_ROUGHNESS
     g_finalColor.rgb = linearTosRGB(vec3(materialInfo.sheenRoughnessFactor));
 #endif
-#endif
+#endif // MATERIAL_SHEEN
 
     // Specular:
 #ifdef MATERIAL_SPECULAR
@@ -543,7 +543,7 @@ vec3 specularTexture = vec3(1.0);
 #endif
     g_finalColor.rgb = u_KHR_materials_specular_specularColorFactor * specularTexture.rgb;
 #endif
-#endif
+#endif // #ifdef MATERIAL_SPECULAR
 
     // Transmission, Volume:
 #ifdef MATERIAL_TRANSMISSION
