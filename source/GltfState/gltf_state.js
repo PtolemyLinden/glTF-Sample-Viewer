@@ -161,6 +161,7 @@ GltfState.DebugOutput = {
         FSS_ESS_GGX         : "FssEss (GGX Spec)",
         FSS_ESS_LAMBERT     : "FssEss (Lambert Diffuse)",
         FRESNEL_ROUGH       : "Fresnel (Rough)",
+        FRESNEL_SPEC        : "Fresnel (Spec)",
         GGXLUT              : "GGX (Scale Bias) LUT",
         IOR                 : "Index of Refraction",
         SPEC_RADIANCE       : "Spec (Radiance)",
