@@ -692,6 +692,7 @@ class gltfRenderer
             {debugOutput: GltfState.DebugOutput.misc.CAMERA_POSITION_RAW , shaderDefine: "DEBUG_CAMERA_POSITION_RAW" },
             {debugOutput: GltfState.DebugOutput.misc.CAMERA_POSITION_NORM, shaderDefine: "DEBUG_CAMERA_POSITION_NORM"},
             {debugOutput: GltfState.DebugOutput.misc.DIFFUSE_IRRADIANCE  , shaderDefine: "DEBUG_DIFFUSE_IRRADIANCE"  },
+            {debugOutput: GltfState.DebugOutput.misc.DIFFUSE_K           , shaderDefine: "DEBUG_DIFFUSE_K"           },
             {debugOutput: GltfState.DebugOutput.misc.DIFFUSE_RADIANCE    , shaderDefine: "DEBUG_DIFFUSE_RADIANCE"    },
             {debugOutput: GltfState.DebugOutput.misc.DIFFUSE_REFLECTENCE , shaderDefine: "DEBUG_DIFFUSE_REFLECTANCE" },
             {debugOutput: GltfState.DebugOutput.misc.DIFFUSE_FINAL       , shaderDefine: "DEBUG_DIFFUSE_FINAL"       },

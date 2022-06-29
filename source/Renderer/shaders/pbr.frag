@@ -399,6 +399,9 @@ void main()
 #if DEBUG == DEBUG_CAMERA_POSITION_NORM
     g_finalColor.rgb = linearTosRGB(normalize(u_Camera)*0.5 + vec3(0.5));
 #endif
+#if DEBUG == DEBUG_DIFFUSE_K
+    g_finalColor.rgb = linearTosRGB( k_D );
+#endif
 #if DEBUG == DEBUG_DIFFUSE_FINAL
     g_finalColor.rgb = linearTosRGB(f_diffuse);
 #endif

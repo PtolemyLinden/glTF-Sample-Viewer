@@ -151,6 +151,7 @@ GltfState.DebugOutput = {
         CAMERA_POSITION_RAW : "Camera position (raw)",
         DIFFUSE_FINAL       : "Diffuse (Final)",
         DIFFUSE_IRRADIANCE  : "Diffuse (Light)",
+        DIFFUSE_K           : "Diffuse (k_D)",
         DIFFUSE_RADIANCE    : "Diffuse (Radiance)",
         DIFFUSE_REFLECTENCE : "Diffuse (Reflectance)",
         DOT_BV              : "dot(Bitangent,V2C)",
