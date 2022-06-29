@@ -414,6 +414,9 @@ void main()
 #if DEBUG == DEBUG_DIFFUSE_RADIANCE
     g_finalColor.rgb = linearTosRGB(diffuse_radiance);
 #endif
+#if DEBUG == DEBUG_DIFFUSE_REFLECT0
+    g_finalColor.rgb = linearTosRGB(materialInfo.f0);
+#endif
 #if DEBUG == DEBUG_DIFFUSE_REFLECTANCE
     g_finalColor.rgb = linearTosRGB(vec3(reflectance)); // NOTE: reflectance is unused!
 #endif
