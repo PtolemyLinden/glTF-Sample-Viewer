@@ -149,20 +149,28 @@ void main()
     f_specular += getIBLRadianceGGX(n, v, materialInfo.perceptualRoughness, materialInfo.f0, materialInfo.specularWeight);
     f_diffuse += getIBLRadianceLambertian(n, v, materialInfo.perceptualRoughness, materialInfo.c_diff, materialInfo.f0, materialInfo.specularWeight);
 #else // inline
-    f_specular += getIBLRadianceGGX(n, v, materialInfo.perceptualRoughness, materialInfo.f0, materialInfo.specularWeight);
-
-//vec3 getIBLRadianceLambertian(vec3 n, vec3 v, float roughness, vec3 diffuseColor, vec3 F0, float specularWeight)
+    // common
 //  float NdotV = clampedDot(n, v);
     vec2 brdfSamplePoint = clamp(vec2(NdotV, materialInfo.perceptualRoughness), vec2(0.0, 0.0), vec2(1.0, 1.0));
     vec2 f_ab = getGGX(brdfSamplePoint);
 
+    vec3 Fr = max(vec3(1.0 - materialInfo.perceptualRoughness), materialInfo.f0) - materialInfo.f0;
+    vec3 k_S = materialInfo.f0 + Fr * pow(1.0 - NdotV, 5.0);
+
+//vec3 getIBLRadianceGGX(vec3 n, vec3 v, float roughness, vec3 F0, float specularWeight)
+    float lod = materialInfo.perceptualRoughness * float(u_MipCount - 1);
+    vec3 reflection = normalize(reflect(-v, n));
+    vec4 specularSample = getSpecularSample(reflection, lod);
+
+    vec3 FssEssGGX = k_S * f_ab.x + f_ab.y;
+    f_specular += materialInfo.specularWeight * specularSample.rgb * FssEssGGX;
+
+//vec3 getIBLRadianceLambertian(vec3 n, vec3 v, float roughness, vec3 diffuseColor, vec3 F0, float specularWeight)
     vec3 irradiance = getDiffuseLight(n);
 
     // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results
     // Roughness dependent fresnel, from Fdez-Aguera
 
-    vec3 Fr = max(vec3(1.0 - materialInfo.perceptualRoughness), materialInfo.f0) - materialInfo.f0;
-    vec3 k_S = materialInfo.f0 + Fr * pow(1.0 - NdotV, 5.0);
     vec3 FssEss = materialInfo.specularWeight * k_S * f_ab.x + f_ab.y; // <--- GGX / specular light contribution (scale it down if the specularWeight is low)
 
     // Multiple scattering, from Fdez-Aguera
