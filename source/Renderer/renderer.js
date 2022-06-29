@@ -708,6 +708,7 @@ class gltfRenderer
             {debugOutput: GltfState.DebugOutput.misc.FRESNEL_ROUGH       , shaderDefine: "DEBUG_FRESNEL_ROUGH"       },
             {debugOutput: GltfState.DebugOutput.misc.FRESNEL_SPEC        , shaderDefine: "DEBUG_FRESNEL_SPEC"        },
             {debugOutput: GltfState.DebugOutput.misc.IOR                 , shaderDefine: "DEBUG_IOR"                 },
+            {debugOutput: GltfState.DebugOutput.misc.REFLECTION          , shaderDefine: "DEBUG_REFLECTION"          },
             {debugOutput: GltfState.DebugOutput.misc.VERTEX_POSITION     , shaderDefine: "DEBUG_VERTEX_POSITION"     },
             {debugOutput: GltfState.DebugOutput.misc.VERT_TO_CAM         , shaderDefine: "DEBUG_VERT_TO_CAM"         },
 

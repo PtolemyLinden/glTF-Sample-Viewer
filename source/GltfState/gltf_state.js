@@ -164,6 +164,7 @@ GltfState.DebugOutput = {
         FRESNEL_SPEC        : "Fresnel (Spec)",
         GGXLUT              : "GGX (Scale Bias) LUT",
         IOR                 : "Index of Refraction",
+        REFLECTION          : "Reflection dir",
         SPEC_RADIANCE       : "Spec (Radiance)",
         SPEC_REFLECTION     : "Spec (Reflection)",
         VERTEX_POSITION     : "Vertex position",

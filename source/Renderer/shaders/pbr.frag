@@ -459,6 +459,9 @@ void main()
     g_finalColor.rgb = linearTosRGB(debug_ior);
 }
 #endif
+#if DEBUG == DEBUG_REFLECTION
+    g_finalColor.rgb = linearTosRGB(reflection);
+#endif
 #if DEBUG == DEBUG_SPEC_RADIANCE
     g_finalColor.rgb = linearTosRGB(spec_radiance);
 #endif
