@@ -700,6 +700,8 @@ class gltfRenderer
             {debugOutput: GltfState.DebugOutput.misc.DOT_NV              , shaderDefine: "DEBUG_DOT_NV"              },
             {debugOutput: GltfState.DebugOutput.misc.DOT_TV              , shaderDefine: "DEBUG_DOT_TV"              },
             {debugOutput: GltfState.DebugOutput.misc.DOT_BV              , shaderDefine: "DEBUG_DOT_BV"              },
+            {debugOutput: GltfState.DebugOutput.misc.FSS_ESS_GGX         , shaderDefine: "DEBUG_FSS_ESS_GGX"         },
+            {debugOutput: GltfState.DebugOutput.misc.FSS_ESS_LAMBERT     , shaderDefine: "DEBUG_FSS_ESS_LAMBERT"     },
             {debugOutput: GltfState.DebugOutput.misc.SPEC_REFLECTION     , shaderDefine: "DEBUG_SPEC_REFLECTION"     },
             {debugOutput: GltfState.DebugOutput.misc.SPEC_RADIANCE       , shaderDefine: "DEBUG_SPEC_RADIANCE"       },
             {debugOutput: GltfState.DebugOutput.misc.GGXLUT              , shaderDefine: "DEBUG_GGXLUT"              },

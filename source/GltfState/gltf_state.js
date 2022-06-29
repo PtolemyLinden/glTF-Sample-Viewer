@@ -158,6 +158,8 @@ GltfState.DebugOutput = {
         DOT_BV              : "dot(Bitangent,V2C)",
         DOT_NV              : "dot(Normal,V2C)",
         DOT_TV              : "dot(Tangent,V2C)",
+        FSS_ESS_GGX         : "FssEss (GGX Spec)",
+        FSS_ESS_LAMBERT     : "FssEss (Lambert Diffuse)",
         FRESNEL_ROUGH       : "Fresnel (Rough)",
         GGXLUT              : "GGX (Scale Bias) LUT",
         IOR                 : "Index of Refraction",

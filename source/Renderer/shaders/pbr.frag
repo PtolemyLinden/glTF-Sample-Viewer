@@ -432,6 +432,12 @@ void main()
 #if DEBUG == DEBUG_FRESNEL_ROUGH
     g_finalColor.rgb = linearTosRGB(vec3(Fr));
 #endif
+#if DEBUG == DEBUG_FSS_ESS_GGX
+    g_finalColor.rgb = linearTosRGB(FssEssGGX);
+#endif
+#if DEBUG == DEBUG_FSS_ESS_LAMBERT
+    g_finalColor.rgb = linearTosRGB(FssEss);
+#endif
 #if DEBUG == DEBUG_GGXLUT
 {
     vec2 brdfSamplePoint = clamp(vec2(NdotV, materialInfo.perceptualRoughness), vec2(0.0, 0.0), vec2(1.0, 1.0));
