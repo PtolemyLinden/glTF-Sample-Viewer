@@ -370,6 +370,15 @@ void main()
 #endif
 
     // Misc:
+#if DEBUG == DEBUG_CUSTOM
+    g_finalColor.rgb = linearTosRGB(vec3(NdotV));
+    g_finalColor.rgb = linearTosRGB(vec3(brdfSamplePoint,0.0));
+    g_finalColor.rgb = linearTosRGB(vec3(f_ab,0.0));
+    g_finalColor.rgb = linearTosRGB(Fr);
+    g_finalColor.rgb = linearTosRGB(k_S);
+    g_finalColor.rgb = linearTosRGB(reflection);
+    g_finalColor.rgb = linearTosRGB(specularSample.rgb);
+#endif
 #if DEBUG == DEBUG_BRDF_SCALE_BIAS
     g_finalColor.rgb = linearTosRGB(vec3(f_ab,0.0));
 #endif

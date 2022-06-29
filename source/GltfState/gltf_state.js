@@ -144,6 +144,7 @@ GltfState.DebugOutput = {
 
     /** miscellaneous calculations */
     misc: {
+        CUSTOM              : "Custom input/ouputs",
         BRDF_SCALE_BIAS     : "BRDF Scale Bias",
         BRDF_UV             : "BRDF uv",
         CAMERA_POSITION_NORM: "Camera position (norm)",

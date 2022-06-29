@@ -686,6 +686,7 @@ class gltfRenderer
             {debugOutput: GltfState.DebugOutput.generic.OCCLUSION, shaderDefine: "DEBUG_OCCLUSION"},
             {debugOutput: GltfState.DebugOutput.generic.EMISSIVE, shaderDefine: "DEBUG_EMISSIVE"},
 
+            {debugOutput: GltfState.DebugOutput.misc.CUSTOM              , shaderDefine: "DEBUG_CUSTOM"              },
             {debugOutput: GltfState.DebugOutput.misc.BRDF_UV             , shaderDefine: "DEBUG_BRDF_UV"             },
             {debugOutput: GltfState.DebugOutput.misc.BRDF_SCALE_BIAS     , shaderDefine: "DEBUG_BRDF_SCALE_BIAS"     },
             {debugOutput: GltfState.DebugOutput.misc.CAMERA_POSITION_RAW , shaderDefine: "DEBUG_CAMERA_POSITION_RAW" },
