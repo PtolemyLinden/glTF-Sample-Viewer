@@ -149,6 +149,7 @@ GltfState.DebugOutput = {
         BRDF_UV             : "BRDF uv",
         CAMERA_POSITION_NORM: "Camera position (norm)",
         CAMERA_POSITION_RAW : "Camera position (raw)",
+        DIFFUSE_C           : "Diffuse (c_diff non metal)",
         DIFFUSE_FINAL       : "Diffuse (Final)",
         DIFFUSE_IRRADIANCE  : "Diffuse (Irradiance)",
         DIFFUSE_K           : "Diffuse (k_D)",

@@ -399,8 +399,8 @@ void main()
 #if DEBUG == DEBUG_CAMERA_POSITION_NORM
     g_finalColor.rgb = linearTosRGB(normalize(u_Camera)*0.5 + vec3(0.5));
 #endif
-#if DEBUG == DEBUG_DIFFUSE_K
-    g_finalColor.rgb = linearTosRGB( k_D );
+#if DEBUG == DEBUG_DIFFUSE_C
+    g_finalColor.rgb = linearTosRGB(materialInfo.c_diff);
 #endif
 #if DEBUG == DEBUG_DIFFUSE_FINAL
     g_finalColor.rgb = linearTosRGB(f_diffuse);
@@ -409,7 +409,12 @@ void main()
 {
     vec3 irradiance = getDiffuseLight(n);
     g_finalColor.rgb = linearTosRGB(irradiance);
+// g_finalColor.rgb = vec3(u_EnvIntensity); // white
+//   g_finalColor.rgb = linearTosRGB(texture(u_LambertianEnvSampler, n).rgb);
 }
+#endif
+#if DEBUG == DEBUG_DIFFUSE_K
+    g_finalColor.rgb = linearTosRGB( k_D );
 #endif
 #if DEBUG == DEBUG_DIFFUSE_RADIANCE
     g_finalColor.rgb = linearTosRGB(diffuse_radiance);
