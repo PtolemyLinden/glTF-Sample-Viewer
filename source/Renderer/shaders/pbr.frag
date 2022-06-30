@@ -434,6 +434,15 @@ void main()
 #if DEBUG == DEBUG_DOT_TV
     g_finalColor.rgb = linearTosRGB(vec3(TdotV));
 #endif
+#if DEBUG == DEBUG_EMS
+    g_finalColor.rgb = linearTosRGB(vec3(Ems));
+#endif
+#if DEBUG == DEBUG_F_AVG
+    g_finalColor.rgb = linearTosRGB(F_avg);
+#endif
+#if DEBUG == DEBUG_FMS_EMS_AVG
+    g_finalColor.rgb = linearTosRGB(FmsEms);
+#endif
 #if DEBUG == DEBUG_FRESNEL_ROUGH
     g_finalColor.rgb = linearTosRGB(vec3(Fr));
 #endif
