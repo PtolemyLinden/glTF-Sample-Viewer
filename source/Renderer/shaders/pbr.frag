@@ -379,6 +379,7 @@ void main()
 
     // Misc:
 #if DEBUG == DEBUG_CUSTOM
+    // Specular
     g_finalColor.rgb = linearTosRGB(vec3(NdotV));
     g_finalColor.rgb = linearTosRGB(vec3(brdfSamplePoint,0.0));
     g_finalColor.rgb = linearTosRGB(vec3(f_ab,0.0));
@@ -386,6 +387,11 @@ void main()
     g_finalColor.rgb = linearTosRGB(k_S);
     g_finalColor.rgb = linearTosRGB(reflection);
     g_finalColor.rgb = linearTosRGB(specularSample.rgb);
+
+    // Diffuse
+    g_finalColor.rgb = linearTosRGB(materialInfo.c_diff);
+    g_finalColor.rgb = linearTosRGB(irradiance);
+
 #endif
 #if DEBUG == DEBUG_BRDF_SCALE_BIAS
     g_finalColor.rgb = linearTosRGB(vec3(f_ab,0.0));
