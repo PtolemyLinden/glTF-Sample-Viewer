@@ -191,11 +191,11 @@ void main()
 #endif
 #endif // USE_IBL
 
-#if DEBUG == DEBUG_SPEC_RADIANCE
-    vec3 spec_radiance = f_specular;
+#if DEBUG == DEBUG_SPEC_IBL
+    vec3 ibl_specular = f_specular;
 #endif
-#if DEBUG ==  DEBUG_DIFFUSE_RADIANCE
-    vec3 diffuse_radiance = f_diffuse;
+#if DEBUG == DEBUG_DIFFUSE_IBL
+    vec3 ibl_diffuse = f_diffuse;
 #endif
 
 #if defined(MATERIAL_TRANSMISSION) && (defined(USE_PUNCTUAL) || defined(USE_IBL))
@@ -422,8 +422,8 @@ void main()
 #if DEBUG == DEBUG_DIFFUSE_K
     g_finalColor.rgb = linearTosRGB( k_D );
 #endif
-#if DEBUG == DEBUG_DIFFUSE_RADIANCE
-    g_finalColor.rgb = linearTosRGB(diffuse_radiance);
+#if DEBUG == DEBUG_DIFFUSE_IBL
+    g_finalColor.rgb = linearTosRGB(ibl_diffuse);
 #endif
 #if DEBUG == DEBUG_DIFFUSE_REFLECT0
     g_finalColor.rgb = linearTosRGB(materialInfo.f0);
@@ -482,8 +482,17 @@ void main()
 #if DEBUG == DEBUG_REFLECTION
     g_finalColor.rgb = linearTosRGB(reflection);
 #endif
-#if DEBUG == DEBUG_SPEC_RADIANCE
-    g_finalColor.rgb = linearTosRGB(spec_radiance);
+#if DEBUG == DEBUG_SPEC_FINAL
+    g_finalColor.rgb = linearTosRGB(f_specular);
+#endif
+#if DEBUG == DEBUG_SPEC_IBL
+    g_finalColor.rgb = linearTosRGB(ibl_specular);
+#endif
+#if DEBUG == DEBUG_SPEC_NORMAL_MAP
+    g_finalColor.rgb = (normalInfo.ntex + 1.0) / 2.0;
+#endif
+#if DEBUG == DEBUG_SPEC_NORMAL_GEOM
+    g_finalColor.rgb = (normalInfo.ng + 1.0) / 2.0;
 #endif
 #if DEBUG == DEBUG_SPEC_REFLECTION
 // getSpecularSample() // return reflection probe
