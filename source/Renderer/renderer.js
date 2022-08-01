@@ -19,6 +19,12 @@ import cubemapVertShader from './shaders/cubemap.vert';
 import cubemapFragShader from './shaders/cubemap.frag';
 import { gltfLight } from '../gltf/light.js';
 
+function DEG_2_RAD( degree )
+{
+    return degree * Math.PI / 180.0;
+}
+
+
 class gltfRenderer
 {
     constructor(context)
@@ -71,6 +77,83 @@ class gltfRenderer
 
         this.currentCameraPosition = vec3.create();
 
+this.lightOverride = [];
+this.lightAnim = true;
+
+// Test Point Lights
+this.lightPoint1 = new gltfLight();
+let p1 = this.lightPoint1;
+p1.type      = "point";
+p1.position  = [0,3,0];
+p1.color     = [1,0,1];
+p1.intensity = 1.0;
+p1.range     = 10;
+//this.lightOverride.push( p1 );
+
+this.lightPoint2 = new gltfLight();
+let p2 = this.lightPoint2;
+p2.type      = "point";
+p2.position  = [0,1,0.5];
+p2.color     = [1,1,1];
+p2.intensity = 1.0;
+p2.range     = 50;
+//this.lightOverride.push( p2 );
+
+
+this.lightSpot1 = new gltfLight();
+let spot1 = this.lightSpot1;
+console.log( "Default gltfLight:\n%o", spot1 );
+spot1.color          = [0,0,1]; // 1,1,1
+spot1.innerConeAngle = 0.0; // DEG_2_RAD( 45.0 );
+spot1.outerConeAngle = 1.0; // DEG_2_RAD( 45.0 );
+spot1.type           = "spot";
+spot1.range          = 5;
+spot1.intensity      = 100.0;
+//spot1.position       = [ 0, 0, 2]; // vis from front
+spot1.position       = [ 1, 0, 2]; // vis from front
+
+//	spot1.position       = [ 2, 0, 0]; // not vis
+//	spot1.position       = [-2, 0, 0]; // not vis
+//	spot1.position       = [ 0, 2, 0]; // vis on top, back
+//	spot1.position       = [ 0,-2, 0];
+//	spot1.position       = [ 0, 0, 2]; // vis from front
+//	spot1.position       = [ 0, 0,-2];
+this.lightOverride.push( spot1 );
+
+if(0)
+{
+	spot1.position       = [0,0,-2];
+	spot1.color          = [0,0,1]; // 1,1,1
+	spot1.innerConeAngle = 0.0; // DEG_2_RAD( 45.0 );
+	spot1.outerConeAngle = 1.0; // DEG_2_RAD( 45.0 );
+	spot1.type           = "spot";
+}
+/*
+spot1.type           = "spot";
+spot1.position       = [0,1,0.5]; // 0,3,0
+spot1.intensity      = 1.0;
+spot1.range          = 50;
+spot1.direction      = [ 0,0,-1]; // [-0.5,0.7071,0.5];
+//spot1.direction      = [ 0,0,1]; // [-0.5,0.7071,0.5];
+*/
+//this.lightOverride.push( spot1 );
+
+this.lightDir1 = new gltfLight();
+let dir1 = this.lightDir1;
+dir1.type           = "directional";
+dir1.color          = [1,1,1];
+dir1.intensity      = 1.0;
+dir1.range          = -1; // Unlimited
+dir1.innerConeAngle = DEG_2_RAD( 0.0 );
+dir1.outerConeAngle = DEG_2_RAD( 38.242 );
+dir1.direction      = [-0.5, 0.7071, 0.5];
+//this.lightOverride.push( dir1 );
+//console.log( "Broken dir:\n%o", dir1 );
+
+        console.info( "Setting lights... ", this.lightOverride.length );
+
+
+// Default Directional Lights
         this.lightKey = new gltfLight();
         this.lightFill = new gltfLight();
         this.lightFill.intensity = 0.5;
@@ -88,6 +171,10 @@ class gltfRenderer
         this.lightFill.direction = vec3.create();
         vec3.transformQuat(this.lightKey.direction, [0, 0, -1], quatKey);
         vec3.transformQuat(this.lightFill.direction, [0, 0, -1], quatFill);
+
+console.log( "Working dir:\n%o", this.lightFill );
+//console.log( "%o",this.lightFill.direction );
+//this.lightOverride.push( this.lightFill );
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -283,8 +370,22 @@ class gltfRenderer
         if (this.visibleLights.length === 0 && !state.renderingParameters.useIBL &&
             state.renderingParameters.useDirectionalLightsWithDisabledIBL)
         {
+if (this.lightOverride.length)
+{
+            const mn = mat4.create();
+            let light = this.lightOverride[0];
+            this.visibleLights.push( [{ worldTransform: mn }, light] );
+            if (this.onlyShowLightOnce != true)
+            {
+                this.onlyShowLightOnce = true;
+                console.info( "Adding light: %o", light );
+                console.info( "Total lights: ", this.visibleLights.length );
+            }
+} else
+{
             this.visibleLights.push([null, this.lightKey]);
             this.visibleLights.push([null, this.lightFill]);
+}
         }
 
         mat4.multiply(this.viewProjectionMatrix, this.projMatrix, this.viewMatrix);
@@ -649,6 +750,7 @@ class gltfRenderer
         {
             fragDefines.push("USE_PUNCTUAL 1");
             fragDefines.push(`LIGHT_COUNT ${this.visibleLights.length}`);
+//console.info( "# Lights: ", this.visibleLights.length );
         }
 
         if (state.renderingParameters.useIBL && state.environment)

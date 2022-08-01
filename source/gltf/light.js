@@ -45,6 +45,8 @@ class gltfLight extends GltfObject
     toUniform(node)
     {
         const matrix = node?.worldTransform ?? mat4.identity;
+if (isNaN( matrix[4] ))
+console.warn( "Matrix NAN" );
 
         // To extract a correct rotation, the scaling component must be eliminated.
         var scale = vec3.fromValues(1, 1, 1);
@@ -69,6 +71,12 @@ class gltfLight extends GltfObject
         mat4.getTranslation(translation, matrix);
         uLight.position = translation;
 
+if(this.position && Array.isArray( this.position ))
+{
+	uLight.position[0] = this.position[0];
+	uLight.position[1] = this.position[1];
+	uLight.position[2] = this.position[2];
+}
         if (this.direction !== undefined)
         {
             uLight.direction = this.direction;

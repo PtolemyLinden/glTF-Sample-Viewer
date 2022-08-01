@@ -1,4 +1,7 @@
-#define GGX_APPROX 1
+// 0 = Reference
+// 1 = Approx
+// 2 = UE4 Approx
+#define GGX_APPROX 2
 
 // Replaced:
 //     vec2 f_ab = texture(u_GGXLUT, brdfSamplePoint).rg;
@@ -15,12 +18,33 @@ vec2 getGGXApprox( vec2 uv ) // brdfSamplePoint
     return vec2( scale, bias );
 }
 
+// Reference: Physically Based Shading on Mobile
+// https://www.unrealengine.com/en-US/blog/physically-based-shading-on-mobile
+//     EnvBRDFApprox( vec3 SpecularColor, float Roughness, float NoV )
+vec2 getGGXApproxUE4( vec2 uv )
+{ 
+          float NdotV     = uv.x;
+          float roughness = uv.y;
+
+    const vec4  c0   = vec4( -1, -0.0275, -0.572, 0.022 );
+    const vec4  c1   = vec4(  1,  0.0425,  1.04 , -0.04 );
+          vec4  r    = roughness * c0 + c1;
+          float a004 = min( r.x * r.x, exp2( -9.28 * NdotV ) ) * r.x + r.y;
+          vec2  AB   = vec2( -1.04, 1.04 ) * a004 + r.zw;
+    return AB;
+}
+
 vec2 getGGX(  vec2 brdfSamplePoint )
 {
-#if GGX_APPROX
+#if GGX_APPROX == 1
     vec2 f_ab = getGGXApprox( brdfSamplePoint );
+//f_ab = vec2(0.5,1.0);
+#elif GGX_APPROX == 2
+    vec2 f_ab = getGGXApproxUE4( brdfSamplePoint );
+//f_ab = vec2(1.0,0.5);
 #else
     vec2 f_ab = texture(u_GGXLUT, brdfSamplePoint).rg;
+//vec2 f_ab = vec2(1.0,1.0);
 #endif
     return f_ab;
 }
