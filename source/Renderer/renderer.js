@@ -118,7 +118,7 @@ spot1.position       = [ 1, 0, 2]; // vis from front
 //	spot1.position       = [ 0,-2, 0];
 //	spot1.position       = [ 0, 0, 2]; // vis from front
 //	spot1.position       = [ 0, 0,-2];
-this.lightOverride.push( spot1 );
+//this.lightOverride.push( spot1 );
 
 if(0)
 {
