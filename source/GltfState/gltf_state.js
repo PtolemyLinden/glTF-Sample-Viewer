@@ -170,7 +170,7 @@ GltfState.DebugOutput = {
         SPEC_REFLECTION     : "Spec (Reflection)",
         FSS_ESS_GGX         : "FssEss (GGX Spec)",
         SPEC_IBL            : "Spec (IBL)",
-        SPEC_FINAL           :"Spec (Final)",
+        SPEC_FINAL          : "Spec (Final)",
 
         space_3             : "---Misc---",
         CUSTOM              : "Custom input/ouputs",
@@ -183,6 +183,22 @@ GltfState.DebugOutput = {
         GGXLUT              : "GGX (Scale Bias) LUT",
         IOR                 : "Index of Refraction",
         VERTEX_POSITION     : "Vertex position",
+    },
+
+    punctual: {
+        _title_          : "---Punctual---",
+        H                : "half dir",
+        L                : "light dir",
+        N_DOT_H          : "dot(n,h)",
+        N_DOT_L          : "dot(n,l)",
+        N_DOT_V          : "dot(n,v)",
+        V_DOT_H          : "dot(v,h)",
+        INTENSITY        : "Light intensity",
+        INTENSITY_N_DOT_L: "intensity * dot(n,l)",
+        BRDF_DIFFUSE     : "BRDF Lambertian()",
+        BRDF_SPECULAR    : "BRDF SpecularGGX()",
+        DIFFUSE          : "Punctual Diffuse contrib",
+        SPECULAR         : "Punctual Specular contrib",
     },
 
     /** output metallic roughness */

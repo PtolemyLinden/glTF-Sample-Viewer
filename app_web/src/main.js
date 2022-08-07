@@ -349,7 +349,8 @@ async function main()
         
         if (redraw) {
             view.renderFrame(state, canvas.width, canvas.height);
-            redraw = false;
+// Uncommented for light animation
+//            redraw = false;
         }
 
         window.requestAnimationFrame(update);

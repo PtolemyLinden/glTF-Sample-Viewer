@@ -29,6 +29,18 @@ precision highp float;
 #include <iridescence.glsl>
 #endif
 
+// dot() return [-1 .. +1 ]
+//    If we use the naive vec3(dot()*0.5 + 0.5) the grayscale is too hard to see if dot() < 0.0
+// Instead we remap:
+//    < 0 red
+//    = 0 blue
+//    > 0 green
+vec3 colorize_dot(float x)
+{
+    if (x > 0.0) return vec3( 0, x, 0 );
+    if (x < 0.0) return vec3( x, 0, 0 );
+                 return vec3( 0, 0, 1 );
+}
 
 out vec4 g_finalColor;
 
@@ -218,6 +230,11 @@ void main()
     f_clearcoat = mix(f_clearcoat, f_clearcoat * ao, u_OcclusionStrength);
 #endif
 
+    vec3 diffuse_pre_light  = f_diffuse;
+    vec3 specular_pre_light = f_specular;
+    vec3 debug_punctual_diffuse  = f_diffuse;
+    vec3 debug_punctual_specular = f_specular;
+
 #ifdef USE_PUNCTUAL
     for (int i = 0; i < LIGHT_COUNT; ++i)
     {
@@ -266,6 +283,43 @@ void main()
 #endif
         }
 
+    #if DEBUG == DEBUG_PUNCTUAL_H
+        debug_punctual_diffuse = h*0.5 + 0.5;
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_L
+        debug_punctual_diffuse = l*0.5 + 0.5;
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_N_DOT_H
+        debug_punctual_diffuse = colorize_dot(NdotH);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_N_DOT_L
+        debug_punctual_diffuse = colorize_dot(NdotL);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_N_DOT_V
+        debug_punctual_diffuse = colorize_dot(NdotV);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_V_DOT_H
+        debug_punctual_diffuse = colorize_dot(VdotH);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_INTENSITY
+        debug_punctual_diffuse = getLighIntensity(light, pointToLight);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_INTENSITY_N_DOT_L
+        debug_punctual_diffuse = getLighIntensity(light, pointToLight) * NdotL;
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_BRDF_DIFFUSE
+        debug_punctual_diffuse = BRDF_lambertian(materialInfo.f0, materialInfo.f90, materialInfo.c_diff, materialInfo.specularWeight, VdotH);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_BRDF_SPECULAR
+        debug_punctual_specular = BRDF_specularGGX(materialInfo.f0, materialInfo.f90, materialInfo.alphaRoughness, materialInfo.specularWeight, VdotH, NdotL, NdotV, NdotH);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_DIFFUSE
+        debug_punctual_diffuse = f_diffuse - diffuse_pre_light;
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_SPECULAR
+        debug_punctual_specular = f_specular - specular_pre_light;
+    #endif
+
         // BDTF
 #ifdef MATERIAL_TRANSMISSION
         // If the light ray travels through the geometry, use the point it exits the geometry again.
@@ -282,9 +336,9 @@ void main()
 #endif
 
         f_transmission += transmittedLight;
-#endif
+#endif // MATERIAL_TRANSMISSION
     }
-#endif
+#endif // USE_PUNCTUAL
 
     f_emissive = u_EmissiveFactor;
 #ifdef MATERIAL_EMISSIVE_STRENGTH
@@ -322,26 +376,26 @@ void main()
 
 #if DEBUG == DEBUG_NONE
 
-#if ALPHAMODE == ALPHAMODE_MASK
+  #if ALPHAMODE == ALPHAMODE_MASK
     // Late discard to avoid samplig artifacts. See https://github.com/KhronosGroup/glTF-Sample-Viewer/issues/267
     if (baseColor.a < u_AlphaCutoff)
     {
         discard;
     }
     baseColor.a = 1.0;
-#endif
+  #endif
 
-#ifdef LINEAR_OUTPUT
+  #ifdef LINEAR_OUTPUT
     g_finalColor = vec4(color.rgb, baseColor.a);
-#else
+  #else
     g_finalColor = vec4(toneMap(color), baseColor.a);
-#endif
+  #endif
 
 #else
     // In case of missing data for a debug view, render a magenta stripe pattern.
     g_finalColor = vec4(1, 0, 1, 1);
     g_finalColor.rb = vec2(max(2.0 * sin(0.1 * (gl_FragCoord.x + gl_FragCoord.y)), 0.0) + 0.3);
-#endif
+#endif // DEBUG_NONE
 
     // Debug views:
 
@@ -510,6 +564,46 @@ void main()
 #if DEBUG == DEBUG_VERT_TO_CAM
     g_finalColor.rgb = linearTosRGB(v);
 #endif
+
+
+    // Punctual:
+    #if DEBUG == DEBUG_PUNCTUAL_H
+        g_finalColor.rgb = linearTosRGB( debug_punctual_diffuse );
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_L
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_N_DOT_H
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_N_DOT_L
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_N_DOT_V
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_V_DOT_H
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_INTENSITY
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_INTENSITY_N_DOT_L
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_BRDF_DIFFUSE
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_BRDF_SPECULAR
+        g_finalColor.rgb = linearTosRGB(debug_punctual_specular);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_DIFFUSE
+        g_finalColor.rgb = linearTosRGB(debug_punctual_diffuse);
+    #endif
+    #if DEBUG == DEBUG_PUNCTUAL_SPECULAR
+        g_finalColor.rgb = linearTosRGB(debug_punctual_specular);
+    #endif
+
 
     // MR:
 #ifdef MATERIAL_METALLICROUGHNESS
